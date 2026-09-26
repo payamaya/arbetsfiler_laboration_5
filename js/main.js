@@ -33,30 +33,30 @@ let history = []
  */
 function validateForm() {
   form.addEventListener('submit', (e) => {
+    // Rensa tidigare felmeddelanden
+    errors = []
+    errorList.innerHTML = ''
     // Kontrollera formulärets obligatoriska fält
     const name = fullnameInput.value.trim()
     const email = emailInput.value.trim()
     const phone = phoneInput.value.trim()
-
-    let errors = ''
     // Visa eventuella felmeddelanden
     if (name === '') {
-      errors = 'Måste ange fullständiga namn'
-      console.log('Måste ange fullständiga namn')
-    } else if (email === '') {
-      errors = 'Måste ange fullständiga e-post address'
-      console.log('Måste ange fullständiga e-post address')
-    } else if (phone === '') {
-      errors = 'Måste ange fullständiga phone nummer'
-      console.log('Måste ange fullständiga phone nummer')
+      errors.push('Måste ange fullständiga namn')
+    }
+    if (email === '') {
+      errors.push('Måste ange fullständiga e-post address')
+    }
+    if (phone === '') {
+      errors.push('Måste ange fullständiga phone nummer')
     }
 
-    if (errors !== '') {
-      e.preventDefault()
-      console.log('errors : ', errors)
-      return
+    e.preventDefault()
+    // Kalla displayErrors om errors existeras
+    if (errors.length > 0) {
+      displayErrors()
+      return false
     }
-
     // Returnera resultatet (true eller false) av valideringen
     console.log('Data sent')
     return true
@@ -69,8 +69,17 @@ validateForm()
  * Visar felmeddelanden på sidan.
  */
 function displayErrors() {
-  // Rensa tidigare felmeddelanden
-  // Skriv ut aktuella felmeddelanden till DOM
+  // Loopa genom errorList
+  if (errorList) {
+    errors.forEach((error) => {
+      let liElement = document.createElement('li')
+      let liErrorText = document.createTextNode(error)
+
+      // Skriv ut aktuella felmeddelanden till DOM
+      liElement.appendChild(liErrorText)
+      errorList.appendChild(liElement)
+    })
+  }
 }
 
 /**
