@@ -33,13 +33,17 @@ let history = []
  */
 function validateForm() {
   form.addEventListener('submit', (e) => {
+    e.preventDefault()
+
     // Rensa tidigare felmeddelanden
     errors = []
     errorList.innerHTML = ''
+
     // Kontrollera formulärets obligatoriska fält
     const name = fullnameInput.value.trim()
     const email = emailInput.value.trim()
     const phone = phoneInput.value.trim()
+
     // Visa eventuella felmeddelanden
     if (name === '') {
       errors.push('Måste ange fullständiga namn')
@@ -51,15 +55,14 @@ function validateForm() {
       errors.push('Måste ange fullständiga phone nummer')
     }
 
-    e.preventDefault()
     // Kalla displayErrors om errors existeras
     if (errors.length > 0) {
       displayErrors()
-      return false
+      return
     }
     // Returnera resultatet (true eller false) av valideringen
     console.log('Data sent')
-    return true
+    createStudentCard()
   })
 }
 
@@ -87,11 +90,35 @@ function displayErrors() {
  */
 function createStudentCard() {
   // Hämta information från formuläret
+  const nameValue = fullnameInput.value.trim()
+  const emailValue = emailInput.value.trim()
+  const phoneValue = phoneInput.value.trim()
+  const selectFont = fontSelect.value
+
   // Uppdatera studentkortet
+  previewFullname.textContent = nameValue
+  previewEmail.textContent = emailValue
+  previewPhone.textContent = phoneValue
+
+  //Check om typsnitt matchar valda font värde
+  previewFullname.style.fontFamily = selectFont
+  previewEmail.style.fontFamily = selectFont
+  previewPhone.style.fontFamily = selectFont
+
+  const newStudent = {
+    name: nameValue,
+    email: emailValue,
+    phone: phoneValue,
+    font: selectFont,
+  }
+  console.log('History Length : ', history.length)
+  console.log('NEW STUDENT : ', newStudent)
   // Lägg till studentkortet i historiken
+  if (typeof studentHistory !== 'undefined') {
+    history.push(newStudent)
+  }
   // Spara och uppdatera historiken
 }
-
 /**
  * Sparar historiken i localStorage.
  */
