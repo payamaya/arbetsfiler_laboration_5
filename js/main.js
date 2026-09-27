@@ -139,7 +139,7 @@ function loadHistory() {
   if (getHistory) {
     history = JSON.parse(getHistory)
   }
-  console.log('history :>> ', history)
+  console.log('getHistory :>> ', history)
 }
 loadHistory()
 /**
