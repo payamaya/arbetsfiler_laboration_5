@@ -134,12 +134,12 @@ function saveHistory() {
  */
 function loadHistory() {
   // Hämta eventuell sparad historik
-  const getHistory = localStorage.getItem('studentHistory')
-  // Uppdatera history
-  if (getHistory) {
-    history = JSON.parse(getHistory)
+  const getStudentHistory = localStorage.getItem('studentHistory')
+  if (getStudentHistory) {
+    history = JSON.parse(getStudentHistory)
   }
-  console.log('history :>> ', history)
+  // Uppdatera history
+  console.log('getStudentHistory :>> ', history)
 }
 loadHistory()
 /**
