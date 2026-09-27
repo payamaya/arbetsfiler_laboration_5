@@ -134,9 +134,14 @@ function saveHistory() {
  */
 function loadHistory() {
   // Hämta eventuell sparad historik
+  const getHistory = localStorage.getItem('studentHistory')
   // Uppdatera history
+  if (getHistory) {
+    history = JSON.parse(getHistory)
+  }
+  console.log('history :>> ', history)
 }
-
+loadHistory()
 /**
  * Visar historiken på sidan.
  */
