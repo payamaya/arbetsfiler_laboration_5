@@ -105,27 +105,30 @@ function createStudentCard() {
   previewEmail.style.fontFamily = selectFont
   previewPhone.style.fontFamily = selectFont
 
-  const newStudent = {
+  const studentCard = {
     name: nameValue,
     email: emailValue,
     phone: phoneValue,
     font: selectFont,
   }
   console.log('History Length : ', history.length)
-  console.log('NEW STUDENT : ', newStudent)
+  console.log('NEW STUDENT : ', studentCard)
   // Lägg till studentkortet i historiken
-  if (typeof studentHistory !== 'undefined') {
-    history.push(newStudent)
-  }
+
+  history.push(studentCard)
+
   // Spara och uppdatera historiken
+  saveHistory()
 }
 /**
  * Sparar historiken i localStorage.
  */
+
 function saveHistory() {
   // Spara history i localStorage
+  localStorage.setItem('studentHistory', JSON.stringify(history))
+  console.log('historyData :', history)
 }
-
 /**
  * Läser in tidigare historik från localStorage.
  */
