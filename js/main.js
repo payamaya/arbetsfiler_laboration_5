@@ -62,6 +62,7 @@ function validateForm() {
     }
     // Returnera resultatet (true eller false) av valideringen
     console.log('Data sent')
+
     createStudentCard()
   })
 }
@@ -119,6 +120,7 @@ function createStudentCard() {
 
   // Spara och uppdatera historiken
   saveHistory()
+  renderHistory()
 }
 /**
  * Sparar historiken i localStorage.
@@ -147,9 +149,38 @@ loadHistory()
  */
 function renderHistory() {
   // Rensa tidigare visad historik
-  // Skriv ut innehållet i history till DOM
-}
+  if (!historySection) return
+  historySection.innerHTML = ''
 
+  if (history.length === 0) return
+
+  // Loopa genom updaterade history
+  history.forEach((student) => {
+    let displayStudentCard = document.createElement('section')
+    displayStudentCard.id = 'preview'
+
+    // Style the student card section
+    let innerDiv = document.createElement('div')
+    innerDiv.className = 'card card-info'
+    innerDiv.style.padding = '16px'
+    innerDiv.style.margin = '12px'
+    innerDiv.style.maxWidth = 'stretch'
+    innerDiv.style.minWidth = 'stretch'
+    innerDiv.style.fontFamily = student.font || 'Georgia'
+
+    // Skriv ut innehållet i history till DOM
+    innerDiv.innerHTML = `
+          <strong>Namn:</strong> ${student.name}<br>
+          <strong>Email:</strong> ${student.email}<br>
+          <strong>Phone:</strong> ${student.phone}<br>
+                        `
+
+    displayStudentCard.appendChild(innerDiv)
+    historySection.appendChild(displayStudentCard)
+  })
+  console.log('History successfully rendered:', history)
+}
+renderHistory()
 /**
  * Rensar formulär, aktuellt studentkort och felmeddelanden.
  */
