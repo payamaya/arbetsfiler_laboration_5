@@ -32,42 +32,36 @@ let history = []
  * @returns {boolean}
  */
 function validateForm() {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault()
+  // Rensa tidigare felmeddelanden
+  errors = []
+  errorList.innerHTML = ''
 
-    // Rensa tidigare felmeddelanden
-    errors = []
-    errorList.innerHTML = ''
+  // Kontrollera formulärets obligatoriska fält
+  const name = fullnameInput.value.trim()
+  const email = emailInput.value.trim()
+  const phone = phoneInput.value.trim()
 
-    // Kontrollera formulärets obligatoriska fält
-    const name = fullnameInput.value.trim()
-    const email = emailInput.value.trim()
-    const phone = phoneInput.value.trim()
+  // Visa eventuella felmeddelanden
+  if (name === '') {
+    errors.push('Måste ange fullständiga namn')
+  }
+  if (email === '') {
+    errors.push('Måste ange fullständiga e-post address')
+  }
+  if (phone === '') {
+    errors.push('Måste ange fullständiga phone nummer')
+  }
 
-    // Visa eventuella felmeddelanden
-    if (name === '') {
-      errors.push('Måste ange fullständiga namn')
-    }
-    if (email === '') {
-      errors.push('Måste ange fullständiga e-post address')
-    }
-    if (phone === '') {
-      errors.push('Måste ange fullständiga phone nummer')
-    }
+  // Kalla displayErrors om errors existeras
+  if (errors.length > 0) {
+    displayErrors()
+    return false
+  }
+  // Returnera resultatet (true eller false) av valideringen
+  console.log('Data sent')
 
-    // Kalla displayErrors om errors existeras
-    if (errors.length > 0) {
-      displayErrors()
-      return
-    }
-    // Returnera resultatet (true eller false) av valideringen
-    console.log('Data sent')
-
-    createStudentCard()
-  })
+  return true
 }
-
-validateForm()
 
 /**
  * Visar felmeddelanden på sidan.
@@ -143,7 +137,7 @@ function loadHistory() {
   // Uppdatera history
   console.log('getStudentHistory :>> ', history)
 }
-loadHistory()
+
 /**
  * Visar historiken på sidan.
  */
@@ -180,13 +174,21 @@ function renderHistory() {
   })
   console.log('History successfully rendered:', history)
 }
-renderHistory()
+
 /**
  * Rensar formulär, aktuellt studentkort och felmeddelanden.
  */
 function clearForm() {
   // Återställ formulär och studentkort
+
+  form.reset()
   // Rensa eventuella felmeddelanden
+  errors = []
+  errorList.innerHTML = ''
+  // Rensa eventuella felmeddelanden
+  previewFullname.textContent = ''
+  previewEmail.textContent = ''
+  previewPhone.textContent = ''
 }
 
 /**
@@ -194,18 +196,32 @@ function clearForm() {
  */
 function deleteHistory() {
   // Radera sparad historik
+
+  localStorage.removeItem('studentHistory')
   // Uppdatera history och visningen på sidan
+  history = []
+  renderHistory()
 }
 
 // Eventlyssnare
-
 // När formuläret skickas:
-// - validera inmatningen
-// - skapa studentkort om valideringen lyckas
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+  // - validera inmatningen
+  const isValid = validateForm()
+  // - skapa studentkort om valideringen lyckas
+  if (isValid) {
+    createStudentCard()
+  }
+})
 
 // När användaren klickar på "Rensa"
+clearButton.addEventListener('click', clearForm)
 
 // När användaren klickar på "Radera historik"
+deleteHistoryButton.addEventListener('click', deleteHistory)
 
 // När sidan laddas:
 // - läs in och visa eventuell tidigare historik
+loadHistory()
+renderHistory()
