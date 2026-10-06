@@ -100,7 +100,7 @@ function createStudentCard() {
   previewEmail.style.fontFamily = selectFont
   previewPhone.style.fontFamily = selectFont
 
-  let studentCard = {
+  const studentCard = {
     name: nameValue,
     email: emailValue,
     phone: phoneValue,
@@ -180,14 +180,16 @@ function renderHistory() {
  */
 function clearForm() {
   // Återställ formulär och studentkort
-  document.getElementById('clear').addEventListener('click', () => {
-    form.reset()
-    // Rensa eventuella felmeddelanden
-    errors = []
-    errorList.innerHTML = ''
-  })
+
+  form.reset()
+  // Rensa eventuella felmeddelanden
+  errors = []
+  errorList.innerHTML = ''
+  // Rensa eventuella felmeddelanden
+  previewFullname.textContent = ''
+  previewEmail.textContent = ''
+  previewPhone.textContent = ''
 }
-clearForm()
 
 /**
  * Raderar hela historiken.
