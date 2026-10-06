@@ -106,7 +106,7 @@ function createStudentCard() {
   previewEmail.style.fontFamily = selectFont
   previewPhone.style.fontFamily = selectFont
 
-  const studentCard = {
+  let studentCard = {
     name: nameValue,
     email: emailValue,
     phone: phoneValue,
@@ -186,8 +186,14 @@ renderHistory()
  */
 function clearForm() {
   // Återställ formulär och studentkort
-  // Rensa eventuella felmeddelanden
+  document.getElementById('clear').addEventListener('click', () => {
+    form.reset()
+    // Rensa eventuella felmeddelanden
+    errors = []
+    errorList.innerHTML = ''
+  })
 }
+clearForm()
 
 /**
  * Raderar hela historiken.
