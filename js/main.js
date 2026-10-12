@@ -180,13 +180,10 @@ function renderHistory() {
  */
 function clearForm() {
   // Återställ formulär och studentkort
-  document.getElementById('clear').addEventListener('click', () => {
-    form.reset()
-
-    // Rensa eventuella felmeddelanden
-    errors = []
-    errorList.innerHTML = ''
-  })
+  form.reset()
+  // Rensa eventuella felmeddelanden
+  errors = []
+  errorList.innerHTML = ''
 }
 
 /**
