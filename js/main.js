@@ -111,6 +111,7 @@ function createStudentCard() {
   // Lägg till studentkortet i historiken
 
   history.push(studentCard)
+  // history.unshift(studentCard)
 
   // Spara och uppdatera historiken
   saveHistory()
@@ -147,9 +148,11 @@ function renderHistory() {
   historySection.innerHTML = ''
 
   if (history.length === 0) return
+  // Rendera historiken i omvänd ordning.
+  const reverseHistoryCar = [...history].reverse()
 
   // Loopa genom updaterade history
-  history.forEach((student) => {
+  reverseHistoryCar.forEach((student) => {
     let displayStudentCard = document.createElement('section')
     displayStudentCard.id = 'preview'
 
