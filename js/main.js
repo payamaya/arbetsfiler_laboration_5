@@ -168,8 +168,8 @@ function renderHistory() {
     // Skriv ut innehållet i history till DOM
     innerDiv.innerHTML = `
           <strong>Namn:</strong> ${student.name}<br>
-          <strong>Email:</strong> ${student.email}<br>
-          <strong>Phone:</strong> ${student.phone}<br>
+          <strong>E-post:</strong> ${student.email}<br>
+          <strong>Telefon:</strong> ${student.phone}<br>
                         `
 
     displayStudentCard.appendChild(innerDiv)
